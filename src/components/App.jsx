@@ -1,40 +1,45 @@
 import React, { Component } from 'react'
-import TaskAddBar from './TaskAddBar/TaskAddBar'
-import TaskList from './TaskList/TaskList'
+import TaskAddBar from './TaskAddBar'
+import TaskList from './TaskList'
+import './App.scss'
 
 class App extends Component {
     state = {
         tasks: []
     }
-    addTask = this.addTask.bind(this)
-    clearAll = this.clearAll.bind(this)
-    updateTasks = this.updateTasks.bind(this)
 
     render() {
         return (
-            <div>
+            <div className="main-block">
                 <TaskAddBar addTask={this.addTask} clearAll={this.clearAll} />
-                <TaskList tasks={this.state.tasks} updateTasks={this.updateTasks} />
+                <TaskList tasks={this.state.tasks} editTask={this.editTask} deleteTask={this.deleteTask} />
             </div>
         )
     }
 
-    addTask(task) {
+    addTask = (task) => {
+        this.setState(prevState => ({ tasks: [...prevState.tasks, task] }))
+    }
+
+    editTask = (id, newTask) => {
         this.setState(prevState => {
-            return { tasks: prevState.tasks.concat(task) }
+            return {
+                tasks: prevState.tasks.map(elem => {
+                    if (elem.id === id) {
+                        elem.task = newTask
+                    }
+                    return elem
+                })
+            }
         })
     }
 
-    updateTasks(tasks) {
-        this.setState(prevState => {
-            return { tasks: tasks }
-        })
+    deleteTask = (id) => {
+        this.setState(prevState => { return { tasks: prevState.tasks.filter(elem => id !== elem.id) } })
     }
 
-    clearAll() {
-        this.setState(prevState => {
-            return { tasks: [] }
-        })
+    clearAll = () => {
+        this.setState({ tasks: [] })
     }
 }
 

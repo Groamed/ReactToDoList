@@ -1,0 +1,13 @@
+$backColor: rgb(70, 70, 70);
+
+.task-add-bar {
+    display: flex;
+    align-items: center;
+}
+
+.task-add-bar__input {
+    margin-right: 5px;
+    background: $backColor;
+    font-size: 30px;
+    text-align: center;
+}
