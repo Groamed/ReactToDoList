@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import TaskAddBar from './TaskAddBar'
 import TaskList from './TaskList'
-import './App.scss'
+import AppStyles from './App.module.scss'
 
 class App extends Component {
     state = {
@@ -10,7 +10,7 @@ class App extends Component {
 
     render() {
         return (
-            <div className="main-block">
+            <div className={AppStyles.mainBlock}>
                 <TaskAddBar addTask={this.addTask} clearAll={this.clearAll} />
                 <TaskList tasks={this.state.tasks} editTask={this.editTask} deleteTask={this.deleteTask} />
             </div>

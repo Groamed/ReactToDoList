@@ -1,15 +1,22 @@
 import React, { Component } from 'react'
-import TaskElement from '../TaskElement';
-import './TaskList.scss'
+import PropTypes from 'prop-types'
+import TaskElement from '../TaskElement'
+import TaskListStyles from './TaskList.module.scss'
 
 class TaskList extends Component {
     render() {
         return (
-            <div className="task-list">
+            <div className={TaskListStyles.taskList}>
                 {this.props.tasks.map(elem => <TaskElement key={elem.id} id={elem.id} task={elem.task} editTask={this.props.editTask} deleteTask={this.props.deleteTask} />)}
             </div>
         )
     }
+}
+
+TaskList.propTypes = {
+    tasks: PropTypes.arrayOf(PropTypes.object),
+    editTask: PropTypes.func,
+    deleteTask: PropTypes.func
 }
 
 export default TaskList

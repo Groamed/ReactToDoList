@@ -1,23 +1,24 @@
 $textColor: rgb(200, 200, 200);
 $usualFont: 30px 'Vollkorn', serif;
 
-.task-element {
+.taskElement {
     border: 1px solid $textColor;
     margin: 5px;
     border-radius: 3px;
 }
 
-.task-element__edit-input {
+.taskElement__editInput {
     font-size: 20px;
 }
 
-.task-element__text {
+.taskElement__text {
     padding: 10px;
     font: $usualFont;
     color: $textColor;
 }
 
-.task-element__text--completed {
+.taskElement__text--completed {
+    @extend .taskElement__text;
     padding: 0px 10px;
     text-decoration: line-through;
 }

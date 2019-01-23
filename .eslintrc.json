@@ -1,0 +1,7 @@
+{
+    "extends": "react-app",
+    "rules": {
+        "no-var": 1,
+        "no-console": 1
+    }
+}

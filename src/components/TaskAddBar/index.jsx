@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import './TaskAddBar.scss'
-import '../main.scss'
+import PropTypes from 'prop-types'
+import TaskAddBarStyles from './TaskAddBar.module.scss'
+import MainStyles from '../main.module.scss'
 
 class TaskAddBar extends Component {
     state = {
@@ -9,10 +10,10 @@ class TaskAddBar extends Component {
 
     render() {
         return (
-            <div className="task-add-bar">
-                <input type="text" className="text-input task-add-bar__input" placeholder="Добавьте новое задание" value={this.state.text} onChange={this.changeInput} onKeyDown={this.pressEnter} />
-                <button className="btn" onClick={this.addTask}>Добавить</button>
-                <button className="btn" onClick={this.props.clearAll}>Удалить все</button>
+            <div className={MainStyles.centerAlign + ' ' + TaskAddBarStyles.taskAddBar}>
+                <input type="text" className={MainStyles.textInput + ' ' + TaskAddBarStyles.taskAddBar__input} placeholder="Добавьте новое задание" value={this.state.text} onChange={this.changeInput} onKeyDown={this.pressEnter} />
+                <button className={MainStyles.btn} onClick={this.addTask}>Добавить</button>
+                <button className={MainStyles.btn} onClick={this.props.clearAll}>Удалить все</button>
             </div>
         )
     }
@@ -25,6 +26,13 @@ class TaskAddBar extends Component {
         this.props.addTask({ id: Math.floor(Math.random() * 10000), task: this.state.text })
         this.setState({ text: '' })
     }
+
+
+}
+
+TaskAddBar.propTypes = {
+    addTask: PropTypes.func,
+    clearAll: PropTypes.func
 }
 
 export default TaskAddBar
