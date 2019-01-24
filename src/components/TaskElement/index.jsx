@@ -12,16 +12,16 @@ class TaskElement extends Component {
 
     render() {
         const normalmode = (!this.state.isCompleted && !this.state.isEdited) ?
-            <React.Fragment>
+            <>
                 <button className={MainStyles.btn} onClick={this.completeTask}>Завершить</button>
                 <button className={MainStyles.btn} onClick={this.editTask}>Редактировать</button>
                 <button className={MainStyles.btn} onClick={this.deleteTask}>Удалить</button>
-            </React.Fragment> : null
+            </> : null
         const editmode = this.state.isEdited ?
-            <React.Fragment>
+            <>
                 <input type="text" className={MainStyles.textInput + ' ' + TaskElementStyles.taskElement__editInput} value={this.state.text} onChange={this.changeInput} />
                 <button className={MainStyles.btn} onClick={this.editTask}>Закончить</button>
-            </React.Fragment> : null
+            </> : null
         return (
             <div className={MainStyles.centerAlign + ' ' + TaskElementStyles.taskElement}>
                 <div className={this.state.isCompleted ? TaskElementStyles['taskElement__text--completed'] : TaskElementStyles.taskElement__text}>{this.props.task}</div>
@@ -48,7 +48,7 @@ class TaskElement extends Component {
 }
 
 TaskElement.propTypes = {
-    id: PropTypes.string,
+    id: PropTypes.number,
     task: PropTypes.string,
     editTask: PropTypes.func,
     deleteTask: PropTypes.func

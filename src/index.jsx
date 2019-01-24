@@ -1,5 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App';
+import Contoller from './components/Contoller';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<Contoller />, document.getElementById('root'));
