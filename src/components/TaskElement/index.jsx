@@ -2,28 +2,31 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import TaskElementStyles from './TaskElement.module.scss'
 import MainStyles from '../main.module.scss'
+import { TasksContext } from '../storage';
 
 class TaskElement extends Component {
     state = {
         isCompleted: false,
-        isEdited: false,
-        text: ''
+        isEdited: false
     }
+
+    editInput = React.createRef()
 
     render() {
         const normalmode = (!this.state.isCompleted && !this.state.isEdited) ?
-            <>
+            <React.Fragment>
                 <button className={MainStyles.btn} onClick={this.completeTask}>Завершить</button>
                 <button className={MainStyles.btn} onClick={this.editTask}>Редактировать</button>
                 <button className={MainStyles.btn} onClick={this.deleteTask}>Удалить</button>
-            </> : null
+            </React.Fragment>
+            : null
         const editmode = this.state.isEdited ?
-            <>
-                <input type="text" className={MainStyles.textInput + ' ' + TaskElementStyles.taskElement__editInput} value={this.state.text} onChange={this.changeInput} />
+            <React.Fragment>
+                <input type="text" className={`${MainStyles.textInput} ${TaskElementStyles.taskElement__editInput}`} ref={this.editInput} />
                 <button className={MainStyles.btn} onClick={this.editTask}>Закончить</button>
-            </> : null
+            </React.Fragment> : null
         return (
-            <div className={MainStyles.centerAlign + ' ' + TaskElementStyles.taskElement}>
+            <div className={`${MainStyles.centerAlign} ${TaskElementStyles.taskElement}`}>
                 <div className={this.state.isCompleted ? TaskElementStyles['taskElement__text--completed'] : TaskElementStyles.taskElement__text}>{this.props.task}</div>
                 {normalmode}
                 {editmode}
@@ -36,15 +39,14 @@ class TaskElement extends Component {
     editTask = () => {
         this.setState(prevState => {
             if (prevState.isEdited) {
-                this.props.editTask(this.props.id, this.state.text)
+                this.context.funcs.editTask(this.props.id, this.editInput.current.value)
+                this.editInput.current.value = ''
             }
-            return { isEdited: !prevState.isEdited, text: '' }
+            return { isEdited: !prevState.isEdited }
         })
     }
 
-    deleteTask = () => { this.props.deleteTask(this.props.id) }
-
-    changeInput = event => this.setState({ text: event.target.value })
+    deleteTask = () => { this.context.funcs.deleteTask(this.props.id) }
 }
 
 TaskElement.propTypes = {
@@ -53,5 +55,7 @@ TaskElement.propTypes = {
     editTask: PropTypes.func,
     deleteTask: PropTypes.func
 }
+
+TaskElement.contextType = TasksContext
 
 export default TaskElement
