@@ -2,6 +2,7 @@ $textColor: rgb(200, 200, 200);
 $usualFont: 30px 'Vollkorn', serif;
 
 .taskElement {
+    align-self: center;
     border: 1px solid $textColor;
     margin: 5px;
     border-radius: 3px;

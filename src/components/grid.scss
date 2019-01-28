@@ -1,0 +1,16 @@
+.grid {
+    display: grid;
+    grid-template: auto 1fr / 1fr 200px;
+}
+
+.grid-head {
+    grid-area: 1 / 1 / 2 / 3;
+}
+
+.grid-main {
+    grid-area: 2 / 1 / 3 / 2;
+}
+
+.grid-nav {
+    grid-area: 2 / 2 / 3 / 3;
+}

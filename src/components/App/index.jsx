@@ -3,6 +3,7 @@ import TaskAddBar from '../TaskAddBar'
 import TaskList from '../TaskList'
 import AppStyles from './App.module.scss'
 import { TasksContext } from '../storage'
+import '../grid.scss'
 
 class App extends Component {
     addTask = (task) => {
@@ -51,7 +52,7 @@ class App extends Component {
 
     render() {
         return (
-            <div className={AppStyles.mainBlock}>
+            <div className={`${AppStyles.mainBlock} grid-main`}>
                 <TasksContext.Provider value={this.state}>
                     <TaskAddBar />
                     <TaskList />
