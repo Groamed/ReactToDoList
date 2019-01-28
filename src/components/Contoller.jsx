@@ -4,6 +4,11 @@ import App from './App'
 import MainStyles from './main.module.scss'
 import DropDown from './DropDown'
 import './grid.scss'
+import ModalHOC from './ModalHOC';
+import DropDownElem from './DropDownElem';
+
+const ModalApp = ModalHOC(App)
+const DropDownModalApp = DropDownElem(ModalApp)
 
 class Controller extends Component {
     updateDaysTasks = (day, tasks) => { this.setState(prevState => prevState.days[day] = tasks) }
@@ -21,7 +26,10 @@ class Controller extends Component {
 
     }
 
-    renderHelper = props => <App {...props} days={this.state.days} updateDaysTasks={this.updateDaysTasks} />
+    renderHelper = props => {
+        const day = props.match.params.day
+        return <App {...props} day={day} days={this.state.days} updateDaysTasks={this.updateDaysTasks} />
+    }
 
     mainPage = () => <div className={`${MainStyles.text} ${MainStyles.centerAlign}`} style={{ width: '100%' }}>Main page: Select the day</div>
 
@@ -35,7 +43,7 @@ class Controller extends Component {
                         {dayArr.map(elem => <NavLink className={MainStyles.link} activeClassName={MainStyles.activeLink} key={elem.toLowerCase()} to={`/${elem.toLowerCase()}`}>{elem}</NavLink>)}
                     </div>
                     <Route path="/:day" component={this.renderHelper} />
-                    <DropDown renderHead={() => <div>View DayTasks</div>} renderBody={() => <div>{dayArr.map(elem => <div>{elem}</div>)}</div>} />
+                    <DropDown renderHead={() => <div>View DayTasks</div>} renderBody={() => <div>{dayArr.map(elem => <DropDownModalApp head={elem} day={elem.toLowerCase()} days={this.state.days} updateDaysTasks={this.updateDaysTasks} />)}</div>} />
                 </div>
             </Router>
         )

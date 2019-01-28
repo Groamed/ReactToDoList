@@ -32,16 +32,26 @@ class App extends Component {
     }
 
     static getDerivedStateFromProps(props, state) {
-        if (props.match.params.day !== state.day) {
+        if (props.day !== state.day) {
             props.updateDaysTasks(state.day, state.tasks)
-            return { day: props.match.params.day, tasks: props.days[props.match.params.day] }
+            return {
+                day: props.day,
+                tasks: props.days[props.day]
+            }
         }
         return null
     }
 
+    componentDidMount() {
+        this.setState({
+            day: this.props.day,
+            tasks: this.props.days[this.props.day]
+        })
+    }
+
     state = {
-        day: this.props.match.params.day,
-        tasks: this.props.days[this.props.match.params.day],
+        day: '',
+        tasks: [],
         funcs: {
             addTask: this.addTask,
             editTask: this.editTask,
