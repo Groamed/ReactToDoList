@@ -43,7 +43,18 @@ class Controller extends Component {
                         {dayArr.map(elem => <NavLink className={MainStyles.link} activeClassName={MainStyles.activeLink} key={elem.toLowerCase()} to={`/${elem.toLowerCase()}`}>{elem}</NavLink>)}
                     </div>
                     <Route path="/:day" component={this.renderHelper} />
-                    <DropDown renderHead={() => <div>View DayTasks</div>} renderBody={() => <div>{dayArr.map(elem => <DropDownModalApp head={elem} day={elem.toLowerCase()} days={this.state.days} updateDaysTasks={this.updateDaysTasks} />)}</div>} />
+                    <DropDown
+                        renderHead={() => <div>View DayTasks</div>}
+                        renderBody={() => <div>
+                            {dayArr.map(elem =>
+                                <DropDownModalApp
+                                    head={elem}
+                                    day={elem.toLowerCase()}
+                                    days={this.state.days}
+                                    updateDaysTasks={this.updateDaysTasks}
+                                />)}
+                        </div>}
+                    />
                 </div>
             </Router>
         )
