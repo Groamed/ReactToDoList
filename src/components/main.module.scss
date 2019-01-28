@@ -30,8 +30,25 @@ $usualFont: 'Vollkorn', serif;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .text {
-    font: $usualFont;
+    font: 24px $usualFont;
+    color: $textColor;
+}
+
+.link {
+    margin: 5px;
+    border: 1px solid $textColor;
+    padding: 5px;
+    font: 24px $usualFont;
+    text-decoration: none;
+    color: $textColor;
+}
+
+.activeLink {
+    @extend .link;
+    background: $textColor;
+    color: $backColor;
 }
