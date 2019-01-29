@@ -1,3 +1,25 @@
 .taskList {
+    display: flex;
+    flex-direction: column;
+}
 
+.listElem-enter {
+    opacity: 0.01;
+}
+
+.listElem-enter-active {
+    opacity: 1;
+    transition: 300ms ease-in;
+}
+
+.listElem-exit {
+    position: relative;
+    right: 0px;
+    opacity: 1;
+}
+
+.listElem-exit-active {
+    opacity: 0.01;
+    right: 500px;
+    transition: 300ms ease-in;
 }

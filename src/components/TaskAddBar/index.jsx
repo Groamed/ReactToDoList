@@ -9,11 +9,13 @@ class TaskAddBar extends Component {
 
     render() {
         return (
-            <div className={`${MainStyles.centerAlign} ${TaskAddBarStyles.taskAddBar}`}>
-                <input type="text" className={`${MainStyles.textInput} ${TaskAddBarStyles.taskAddBar__input}`} placeholder="Добавьте новое задание" ref={this.taskInput} onKeyDown={this.pressEnter} />
-                <button className={MainStyles.btn} onClick={this.addTask}>Добавить</button>
-                <button className={MainStyles.btn} onClick={this.context.funcs.clearAll}>Удалить все</button>
-            </div>
+            <React.Fragment>
+                <div className={`${MainStyles.centerAlign} ${TaskAddBarStyles.taskAddBar}`}>
+                    <input type="text" className={`${MainStyles.textInput} ${TaskAddBarStyles.taskAddBar__input}`} placeholder="Добавьте новое задание" ref={this.taskInput} onKeyDown={this.pressEnter} />
+                    <button className={MainStyles.btn} onClick={this.addTask}>Добавить</button>
+                    <button className={MainStyles.btn} onClick={this.context.funcs.clearAll}>Удалить все</button>
+                </div>
+            </React.Fragment>
         )
     }
 
