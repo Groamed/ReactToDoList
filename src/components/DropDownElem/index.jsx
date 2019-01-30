@@ -1,31 +1,28 @@
 import React, { Component } from 'react'
+import { MenuItem } from '@material-ui/core';
 
-function DropDownElem(Element) {
-    return class DropDownElem extends Component {
-        closeModal = () => {
-            this.setState({ isOpen: false })
+class DropDownElem extends Component {
+    closeModal = () => {
+        this.setState({ isOpen: false })
+    }
 
-        }
+    openModal = () => {
+        this.setState({ isOpen: true })
+    }
 
-        openModal = () => {
-            this.setState({ isOpen: true })
-        }
+    state = {
+        isOpen: false
+    }
 
-        state = {
-            isOpen: false
-        }
-
-        render() {
-            const { head, ...rest } = this.props
-            return (
-                <React.Fragment>
-                    <div onClick={this.openModal}>
-                        {head}
-                    </div>
-                    {this.state.isOpen && <Element isOpen={this.state.isOpen} closeModal={this.closeModal} {...rest} />}
-                </React.Fragment>
-            )
-        }
+    render() {
+        return (
+            <React.Fragment>
+                <MenuItem onClick={this.state.isOpen ? null : this.openModal} color="secondary">
+                    {this.props.name}
+                    {this.state.isOpen && this.props.renderModal(this.state.isOpen, this.closeModal)}
+                </MenuItem>
+            </React.Fragment>
+        )
     }
 }
 

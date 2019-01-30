@@ -1,31 +1,38 @@
 import React, { Component } from 'react'
-import './DropDown.scss'
-import MainStyles from '../main.module.scss'
-import '../grid.scss'
+import Button from '@material-ui/core/Button'
+import { Menu, Grid } from '@material-ui/core';
 
 class DropDown extends Component {
-    changeState = () => {
-        this.setState(({ isOpen }) => ({ isOpen: !isOpen }))
-    }
+    handleClick = event => {
+        this.setState({ anchorEl: event.currentTarget });
+    };
+
+    handleClose = () => {
+        this.setState({ anchorEl: null });
+    };
 
     state = {
-        isOpen: false
+        anchorEl: null
     }
 
     render() {
         return (
-            <div className={'grid-nav'} style={{ display: 'inline-block' }}>
-                <div className={`${MainStyles.centerAlign} header-style`} onClick={this.changeState}>
-                    {this.props.renderHead()}
-                    <div className={this.state.isOpen ? 'opened' : 'closed'}>
-                        <span className={`left`} />
-                        <span className={`right`} />
-                    </div>
-                </div>
-                <div className={`${MainStyles.centerAlign} elem-styles`}>
-                    {this.state.isOpen && this.props.renderBody()}
-                </div>
-            </div>
+            <Grid item xs={3}>
+                <Button color="secondary" variant="contained" onClick={this.handleClick}>View DayTasks</Button>
+                <Menu
+                    color="secondary"
+                    disableAutoFocus
+                    getContentAnchorEl={null}
+                    anchorEl={this.state.anchorEl}
+                    open={Boolean(this.state.anchorEl)}
+                    onClose={this.handleClose}
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'center'
+                    }}>
+                    {this.props.elemList}
+                </Menu>
+            </Grid>
         )
     }
 }

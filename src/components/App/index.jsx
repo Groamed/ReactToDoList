@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import TaskAddBar from '../TaskAddBar'
 import TaskList from '../TaskList'
-import AppStyles from './App.module.scss'
-import { TasksContext } from '../storage'
-import '../grid.scss'
+import { FuncsContext } from '../storage'
+import { Grid } from '@material-ui/core';
 
 class App extends Component {
     addTask = (task) => {
@@ -49,25 +48,28 @@ class App extends Component {
         })
     }
 
+    componentWillUnmount() {
+        this.props.updateDaysTasks(this.state.day, this.state.tasks)
+    }
+
     state = {
         day: '',
-        tasks: [],
-        funcs: {
-            addTask: this.addTask,
-            editTask: this.editTask,
-            deleteTask: this.deleteTask,
-            clearAll: this.clearAll
-        }
+        tasks: []
+    }
+
+    funcs = {
+        editTask: this.editTask,
+        deleteTask: this.deleteTask
     }
 
     render() {
         return (
-            <div className={`${AppStyles.mainBlock} grid-main`}>
-                <TasksContext.Provider value={this.state}>
-                    <TaskAddBar />
-                    <TaskList />
-                </TasksContext.Provider>
-            </div >
+            <Grid item xs container justify="center" alignItems="center" wrap="wrap">
+                <FuncsContext.Provider value={this.funcs}>
+                    <TaskAddBar addTask={this.addTask} clearAll={this.clearAll} />
+                    <TaskList tasks={this.state.tasks} />
+                </FuncsContext.Provider>
+            </Grid>
         )
     }
 }

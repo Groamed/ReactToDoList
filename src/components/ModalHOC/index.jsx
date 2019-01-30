@@ -1,16 +1,17 @@
 import React, { Component } from 'react'
-import ModalHOCStyles from './ModalHOC.module.scss'
-import MainStyles from '../main.module.scss'
+import { Dialog, DialogContent, DialogTitle } from '@material-ui/core';
 
 function ModalHOC(Element) {
-    return class Modal extends Component {
+    return class ModalHOC extends Component {
         render() {
             const { isOpen, closeModal, ...rest } = this.props
             return (
-                <div className={ModalHOCStyles.modal}>
-                    <Element {...rest} />
-                    <input type="button" value="Close" className={`${ModalHOCStyles.closeBtn} ${MainStyles.btn}`} onClick={closeModal} />
-                </div>
+                <Dialog open={isOpen} onClose={closeModal}>
+                    <DialogTitle>Просмотр заданий</DialogTitle>
+                    <DialogContent>
+                        <Element {...rest} />
+                    </DialogContent>
+                </Dialog>
             )
         }
     }
