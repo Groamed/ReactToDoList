@@ -1,11 +1,18 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { TextField, Button } from '@material-ui/core';
+import { TextField, Button, withStyles } from '@material-ui/core';
+
+const style = theme => ({
+    butGrad: {
+        background: 'linear-gradient(45deg, rgba(234,18,18,1) 0%, rgba(212,232,0,1) 100%)',
+        margin: '5px',
+    }
+})
 
 class TaskAddBar extends Component {
     taskInput = null
-
     render() {
+        const { classes } = this.props;
         return (
             <React.Fragment>
                 <TextField
@@ -17,8 +24,8 @@ class TaskAddBar extends Component {
                     onKeyDown={this.pressEnter}
                     style={{ width: '50%' }}
                 />
-                <Button color="secondary" variant="contained" onClick={this.addTask}>Добавить</Button>
-                <Button color="secondary" variant="contained" onClick={this.props.clearAll}>Удалить все</Button>
+                <Button className={classes.butGrad} variant="contained" onClick={this.addTask}>Добавить</Button>
+                <Button className={classes.butGrad} variant="contained" onClick={this.props.clearAll}>Удалить все</Button>
             </React.Fragment>
         )
     }
@@ -36,4 +43,4 @@ TaskAddBar.propTypes = {
     clearAll: PropTypes.func
 }
 
-export default TaskAddBar
+export default withStyles(style)(TaskAddBar)

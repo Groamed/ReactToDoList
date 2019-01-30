@@ -17,18 +17,17 @@ class DropDown extends Component {
 
     render() {
         return (
-            <Grid item xs={3}>
-                <Button color="secondary" variant="contained" onClick={this.handleClick}>View DayTasks</Button>
+            <Grid item xs={3} container justify="center">
+                <Button color="primary" variant="contained" onClick={this.handleClick}>View DayTasks</Button>
                 <Menu
-                    color="secondary"
                     disableAutoFocus
                     getContentAnchorEl={null}
                     anchorEl={this.state.anchorEl}
                     open={Boolean(this.state.anchorEl)}
                     onClose={this.handleClose}
-                    anchorOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'center'
+                    transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right'
                     }}>
                     {this.props.elemList}
                 </Menu>

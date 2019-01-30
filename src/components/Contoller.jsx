@@ -30,7 +30,10 @@ class Controller extends Component {
         return <App {...props} day={day} days={this.state.days} updateDaysTasks={this.updateDaysTasks} />
     }
 
-    mainPage = () => <Grid container justify="center"><Typography variant="h3">Main page: Select the day</Typography></Grid>
+    mainPage = () =>
+        <Grid container justify="center">
+            <Typography variant="h3">Select the day</Typography>
+        </Grid>
 
     render() {
         const dayArr = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
@@ -39,12 +42,18 @@ class Controller extends Component {
                 <React.Fragment>
                     <Grid container justify="center" alignItems="center" wrap="wrap">
                         <Route exact path="/" component={this.mainPage} />
-                        <Grid container justify="center" alignItems="center" spacing={8}>
-                            {dayArr.map(elem => <Grid item key={elem.toLowerCase()}><Link to={`/${elem.toLowerCase()}`} component={MyLink} variant="h4" color="primary">{elem}</Link></Grid>)}
+                        <Grid item xs container justify="center" alignItems="center" spacing={8}>
+                            {dayArr.map(elem =>
+                                <Grid item key={elem.toLowerCase()}>
+                                    <Link
+                                        to={`/${elem.toLowerCase()}`}
+                                        component={MyLink}
+                                        variant="h4"
+                                        color="primary">
+                                        {elem}
+                                    </Link>
+                                </Grid>)}
                         </Grid>
-                    </Grid>
-                    <Grid container justify="space-around" alignItems="center" wrap="wrap">
-                        <Route path="/:day" component={this.renderHelper} />
                         <DropDown
                             elemList={dayArr.map(elem =>
                                 <DropDownElem
@@ -60,6 +69,9 @@ class Controller extends Component {
                                         />}
                                 />)}
                         />
+                    </Grid>
+                    <Grid container justify="space-around" alignItems="center" wrap="wrap">
+                        <Route path="/:day" component={this.renderHelper} />
                     </Grid>
                 </React.Fragment>
             </Router >

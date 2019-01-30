@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { FuncsContext } from '../storage';
-import { TextField, Button, Typography } from '@material-ui/core';
+import { FuncsContext } from '../storage'
+import { TextField, Button, Typography, Grid, Card, CardActionArea, CardContent, CardActions } from '@material-ui/core'
 
 class TaskElement extends Component {
     state = {
@@ -14,9 +14,9 @@ class TaskElement extends Component {
     render() {
         const normalmode = (!this.state.isCompleted && !this.state.isEdited) ?
             <React.Fragment>
-                <Button color="secondary" onClick={this.completeTask}>Завершить</Button>
-                <Button color="secondary" onClick={this.editTask}>Редактировать</Button>
-                <Button color="secondary" onClick={this.deleteTask}>Удалить</Button>
+                <Button onClick={this.completeTask}>Завершить</Button>
+                <Button onClick={this.editTask}>Редактировать</Button>
+                <Button onClick={this.deleteTask}>Удалить</Button>
             </React.Fragment>
             : null
         const editmode = this.state.isEdited ?
@@ -27,14 +27,23 @@ class TaskElement extends Component {
                     margin="dense"
                     inputRef={el => this.editInput = el}
                 />
-                <Button color="secondary" onClick={this.editTask}>Закончить</Button>
+                <Button onClick={this.editTask}>Закончить</Button>
             </React.Fragment> : null
         return (
-            <div>
-                <Typography variant="h5">{this.props.task}</Typography>
-                {normalmode}
-                {editmode}
-            </div>
+            <Grid item>
+                <Card>
+                    <CardActionArea>
+                        <CardContent>
+                            <Typography variant="title">Задание на день</Typography>
+                            <Typography variant="body1">{this.props.task}</Typography>
+                        </CardContent>
+                    </CardActionArea>
+                    <CardActions>
+                        {normalmode}
+                        {editmode}
+                    </CardActions>
+                </Card>
+            </Grid>
         )
     }
 
