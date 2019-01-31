@@ -1,26 +1,19 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { FuncsContext } from '../storage'
 import { TextField, Button, Typography, Grid, Card, CardActionArea, CardContent, CardActions } from '@material-ui/core'
 
 class TaskElement extends Component {
-    state = {
-        isCompleted: false,
-        isEdited: false
-    }
-
     editInput = null
 
     render() {
-        const normalmode = (!this.state.isCompleted && !this.state.isEdited) ?
-            <React.Fragment>
+        const normalmode = (!this.props.completed && !this.props.edited) ?
+            <CardActions>
                 <Button onClick={this.completeTask}>Завершить</Button>
                 <Button onClick={this.editTask}>Редактировать</Button>
                 <Button onClick={this.deleteTask}>Удалить</Button>
-            </React.Fragment>
-            : null
-        const editmode = this.state.isEdited ?
-            <React.Fragment>
+            </CardActions> : null
+        const editmode = this.props.edited ?
+            <CardActions>
                 <TextField variant="outlined"
                     label="Редактирование"
                     placeholder="Введите значение"
@@ -28,45 +21,40 @@ class TaskElement extends Component {
                     inputRef={el => this.editInput = el}
                 />
                 <Button onClick={this.editTask}>Закончить</Button>
-            </React.Fragment> : null
+            </CardActions> : null
         return (
             <Grid item>
-                <Card>
+                <Card style={{ maxWidth: '400px' }}>
                     <CardActionArea>
                         <CardContent>
-                            <Typography variant="title">Задание на день</Typography>
-                            <Typography variant="body1">{this.props.task}</Typography>
+                            <Typography variant="h6">Задание на день</Typography>
+                            <Typography variant="body1" style={{ textDecoration: this.props.completed ? 'line-through' : 'none' }}>{this.props.task}</Typography>
                         </CardContent>
                     </CardActionArea>
-                    <CardActions>
-                        {normalmode}
-                        {editmode}
-                    </CardActions>
+                    {normalmode}
+                    {editmode}
                 </Card>
             </Grid>
         )
     }
 
-    completeTask = () => { this.setState({ isCompleted: true }) }
+    completeTask = () => { this.props.completeTask() }
 
     editTask = () => {
-        this.setState(prevState => {
-            if (prevState.isEdited) {
-                this.context.editTask(this.props.id, this.editInput.value)
-                this.editInput.value = ''
-            }
-            return { isEdited: !prevState.isEdited }
-        })
+        if (this.props.edited) {
+            this.props.endEditTask(this.editInput.value)
+            this.editInput.value = ''
+        } else {
+            this.props.startEditTask()
+        }
     }
 
-    deleteTask = () => { this.context.deleteTask(this.props.id) }
+    deleteTask = () => { this.props.deleteTask() }
 }
 
 TaskElement.propTypes = {
     id: PropTypes.number,
     task: PropTypes.string
 }
-
-TaskElement.contextType = FuncsContext
 
 export default TaskElement

@@ -10,25 +10,7 @@ const ModalApp = ModalHOC(App)
 const MyLink = props => <NavLink {...props} />
 
 class Controller extends Component {
-    updateDaysTasks = (day, tasks) => { this.setState(prevState => prevState.days[day] = tasks) }
-
-    state = {
-        days: {
-            monday: [],
-            tuesday: [],
-            wednesday: [],
-            thursday: [],
-            friday: [],
-            saturday: [],
-            sunday: []
-        },
-
-    }
-
-    renderHelper = props => {
-        const day = props.match.params.day
-        return <App {...props} day={day} days={this.state.days} updateDaysTasks={this.updateDaysTasks} />
-    }
+    renderHelper = ({ match: { params: { day } } }) => <App day={day} />
 
     mainPage = () =>
         <Grid container justify="center">
@@ -59,14 +41,7 @@ class Controller extends Component {
                                 <DropDownElem
                                     name={elem}
                                     key={elem.toLowerCase()}
-                                    renderModal={(isOpen, closeModal) =>
-                                        <ModalApp
-                                            isOpen={isOpen}
-                                            closeModal={closeModal}
-                                            day={elem.toLowerCase()}
-                                            days={this.state.days}
-                                            updateDaysTasks={this.updateDaysTasks}
-                                        />}
+                                    renderModal={() => <ModalApp day={elem.toLowerCase()} />}
                                 />)}
                         />
                     </Grid>

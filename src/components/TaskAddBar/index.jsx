@@ -25,7 +25,7 @@ class TaskAddBar extends Component {
                     style={{ width: '50%' }}
                 />
                 <Button className={classes.butGrad} variant="contained" onClick={this.addTask}>Добавить</Button>
-                <Button className={classes.butGrad} variant="contained" onClick={this.props.clearAll}>Удалить все</Button>
+                <Button className={classes.butGrad} variant="contained" onClick={this.clearAll}>Удалить все</Button>
             </React.Fragment>
         )
     }
@@ -33,9 +33,11 @@ class TaskAddBar extends Component {
     pressEnter = event => event.key === 'Enter' ? this.addTask() : null
 
     addTask = () => {
-        this.props.addTask({ id: Math.floor(Math.random() * 10000), task: this.taskInput.value })
+        this.props.addTask(Math.floor(Math.random() * 10000), this.taskInput.value)
         this.taskInput.value = ''
     }
+
+    clearAll = () => { this.props.clearAll() }
 }
 
 TaskAddBar.propTypes = {

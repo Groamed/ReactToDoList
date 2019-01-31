@@ -20,7 +20,6 @@ class DropDown extends Component {
             <Grid item xs={3} container justify="center">
                 <Button color="primary" variant="contained" onClick={this.handleClick}>View DayTasks</Button>
                 <Menu
-                    disableAutoFocus
                     getContentAnchorEl={null}
                     anchorEl={this.state.anchorEl}
                     open={Boolean(this.state.anchorEl)}

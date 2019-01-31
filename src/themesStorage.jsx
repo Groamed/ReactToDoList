@@ -1,10 +1,4 @@
-import React from 'react'
 import { createMuiTheme } from '@material-ui/core/styles'
-
-export const FuncsContext = React.createContext({
-    editTask: () => { },
-    deleteTask: () => { }
-})
 
 export const themes = {
     dark: createMuiTheme({

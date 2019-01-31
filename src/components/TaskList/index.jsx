@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import TaskElement from '../TaskElement'
+import TaskContainer from '../../redux/containers/TaskContainer';
 import { Grid, Slide } from '@material-ui/core';
 import { TransitionGroup } from 'react-transition-group';
 import './cssTransition.scss'
@@ -12,7 +12,7 @@ class TaskList extends Component {
                 <TransitionGroup component={null}>
                     {this.props.tasks.map(elem =>
                         <Slide direction="right" key={elem.id} timeout={500}>
-                            <TaskElement id={elem.id} task={elem.task} />
+                            <TaskContainer {...elem} />
                         </Slide>)}
                 </TransitionGroup>
             </Grid>
