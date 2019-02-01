@@ -12,7 +12,6 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const DropDownElem = props => {
-    console.log(1)
     return (
         <React.Fragment>
             <MenuItem onClick={props.opened ? null : () => props.openModal(props.name.toLowerCase())} color="secondary">
