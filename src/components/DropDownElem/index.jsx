@@ -1,33 +1,27 @@
-import React, { Component } from 'react'
+import React from 'react'
+import { MenuItem } from '@material-ui/core';
+import { connect } from 'react-redux'
+import { openModal } from '../../redux/actions'
 
-function DropDownElem(Element) {
-    return class DropDownElem extends Component {
-        closeModal = () => {
-            this.setState({ isOpen: false })
+const mapStateToProps = state => ({
+    ...state.modalRuler
+})
 
-        }
+const mapDispatchToProps = dispatch => ({
+    openModal: day => dispatch(openModal(day))
+})
 
-        openModal = () => {
-            this.setState({ isOpen: true })
-        }
-
-        state = {
-            isOpen: false
-        }
-
-        render() {
-            const { head, ...rest } = this.props
-            return (
-                <React.Fragment>
-                    <div onClick={this.openModal}>
-                        {head}
-                    </div>
-                    {this.state.isOpen && <Element isOpen={this.state.isOpen} closeModal={this.closeModal} {...rest} />}
-                </React.Fragment>
-            )
-        }
-    }
+const DropDownElem = props => {
+    console.log(1)
+    return (
+        <React.Fragment>
+            <MenuItem onClick={props.opened ? null : () => props.openModal(props.name.toLowerCase())} color="secondary">
+                {props.name}
+                {props.opened && props.renderModal()}
+            </MenuItem>
+        </React.Fragment>
+    )
 }
 
 
-export default DropDownElem
+export default connect(mapStateToProps, mapDispatchToProps)(DropDownElem)

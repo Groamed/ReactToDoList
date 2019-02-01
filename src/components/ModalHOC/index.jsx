@@ -1,19 +1,27 @@
-import React, { Component } from 'react'
-import ModalHOCStyles from './ModalHOC.module.scss'
-import MainStyles from '../main.module.scss'
+import React from 'react'
+import { Dialog, DialogContent, DialogTitle } from '@material-ui/core';
+import { connect } from 'react-redux'
+import { closeModal } from '../../redux/actions'
+
+const mapStateToProps = state => ({
+    ...state.modalRuler
+})
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+    closeModal: (day = ownProps.day) => dispatch(closeModal(day))
+})
 
 function ModalHOC(Element) {
-    return class Modal extends Component {
-        render() {
-            const { isOpen, closeModal, ...rest } = this.props
-            return (
-                <div className={ModalHOCStyles.modal}>
-                    <Element {...rest} />
-                    <input type="button" value="Close" className={`${ModalHOCStyles.closeBtn} ${MainStyles.btn}`} onClick={closeModal} />
-                </div>
-            )
-        }
-    }
+    return connect(mapStateToProps, mapDispatchToProps)(({ day, opened, closeModal, ...rest }) => {
+        return (
+            <Dialog open={opened} onClose={() => closeModal(day)}>
+                <DialogTitle>Просмотр заданий</DialogTitle>
+                <DialogContent>
+                    <Element day={day} {...rest} />
+                </DialogContent>
+            </Dialog>
+        )
+    })
 }
 
 export default ModalHOC

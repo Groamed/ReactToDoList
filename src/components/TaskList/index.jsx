@@ -1,29 +1,27 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { CSSTransition, TransitionGroup } from 'react-transition-group'
-import TaskElement from '../TaskElement'
-import TaskListStyles from './TaskList.module.scss'
-import { TasksContext } from '../storage';
+import TaskContainer from '../../redux/containers/TaskContainer';
+import { Grid, Slide } from '@material-ui/core';
+import { TransitionGroup } from 'react-transition-group';
+import './cssTransition.scss'
 
 class TaskList extends Component {
     render() {
         return (
-            <TransitionGroup className={`${TaskListStyles.taskList}`}>
-                {this.context.tasks.map(elem =>
-                    <CSSTransition key={elem.id} timeout={300} classNames={{ enter: `${TaskListStyles['listElem-enter']}`, enterActive: `${TaskListStyles['listElem-enter-active']}`, exit: `${TaskListStyles['listElem-exit']}`, exitActive: `${TaskListStyles['listElem-exit-active']}` }}>
-                        <TaskElement key={elem.id} id={elem.id} task={elem.task} />
-                    </CSSTransition>)}
-            </TransitionGroup>
+            <Grid container justify="space-around" alignItems="center" wrap="wrap" spacing={8}>
+                <TransitionGroup component={null}>
+                    {this.props.tasks.map(elem =>
+                        <Slide direction="right" key={elem.id} timeout={500}>
+                            <TaskContainer {...elem} />
+                        </Slide>)}
+                </TransitionGroup>
+            </Grid>
         )
     }
 }
 
 TaskList.propTypes = {
-    tasks: PropTypes.arrayOf(PropTypes.object),
-    editTask: PropTypes.func,
-    deleteTask: PropTypes.func
+    tasks: PropTypes.arrayOf(PropTypes.object)
 }
-
-TaskList.contextType = TasksContext
 
 export default TaskList

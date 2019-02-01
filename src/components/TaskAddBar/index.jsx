@@ -1,20 +1,31 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import TaskAddBarStyles from './TaskAddBar.module.scss'
-import MainStyles from '../main.module.scss'
-import { TasksContext } from '../storage';
+import { TextField, Button, withStyles } from '@material-ui/core';
+
+const style = theme => ({
+    butGrad: {
+        background: 'linear-gradient(45deg, rgba(234,18,18,1) 0%, rgba(212,232,0,1) 100%)',
+        margin: '5px',
+    }
+})
 
 class TaskAddBar extends Component {
-    taskInput = React.createRef()
-
+    taskInput = null
     render() {
+        const { classes } = this.props;
         return (
             <React.Fragment>
-                <div className={`${MainStyles.centerAlign} ${TaskAddBarStyles.taskAddBar}`}>
-                    <input type="text" className={`${MainStyles.textInput} ${TaskAddBarStyles.taskAddBar__input}`} placeholder="Добавьте новое задание" ref={this.taskInput} onKeyDown={this.pressEnter} />
-                    <button className={MainStyles.btn} onClick={this.addTask}>Добавить</button>
-                    <button className={MainStyles.btn} onClick={this.context.funcs.clearAll}>Удалить все</button>
-                </div>
+                <TextField
+                    variant="outlined"
+                    label="Введите задание"
+                    placeholder="Добавьте новое задание"
+                    margin="dense"
+                    inputRef={el => this.taskInput = el}
+                    onKeyDown={this.pressEnter}
+                    style={{ width: '50%' }}
+                />
+                <Button className={classes.butGrad} variant="contained" onClick={this.addTask}>Добавить</Button>
+                <Button className={classes.butGrad} variant="contained" onClick={this.clearAll}>Удалить все</Button>
             </React.Fragment>
         )
     }
@@ -22,11 +33,11 @@ class TaskAddBar extends Component {
     pressEnter = event => event.key === 'Enter' ? this.addTask() : null
 
     addTask = () => {
-        this.context.funcs.addTask({ id: Math.floor(Math.random() * 10000), task: this.taskInput.current.value })
-        this.taskInput.current.value = ''
+        this.props.addTask(Math.floor(Math.random() * 10000), this.taskInput.value)
+        this.taskInput.value = ''
     }
 
-
+    clearAll = () => { this.props.clearAll() }
 }
 
 TaskAddBar.propTypes = {
@@ -34,6 +45,4 @@ TaskAddBar.propTypes = {
     clearAll: PropTypes.func
 }
 
-TaskAddBar.contextType = TasksContext
-
-export default TaskAddBar
+export default withStyles(style)(TaskAddBar)

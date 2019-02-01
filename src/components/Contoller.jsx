@@ -1,62 +1,55 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, NavLink, Route } from 'react-router-dom'
 import App from './App'
-import MainStyles from './main.module.scss'
 import DropDown from './DropDown'
-import './grid.scss'
 import ModalHOC from './ModalHOC';
 import DropDownElem from './DropDownElem';
+import { Typography, Link, Grid } from '@material-ui/core';
 
 const ModalApp = ModalHOC(App)
-const DropDownModalApp = DropDownElem(ModalApp)
+const MyLink = props => <NavLink {...props} />
 
 class Controller extends Component {
-    updateDaysTasks = (day, tasks) => { this.setState(prevState => prevState.days[day] = tasks) }
+    renderHelper = ({ match: { params: { day } } }) => <App day={day} />
 
-    state = {
-        days: {
-            monday: [],
-            tuesday: [],
-            wednesday: [],
-            thursday: [],
-            friday: [],
-            saturday: [],
-            sunday: []
-        },
-
-    }
-
-    renderHelper = props => {
-        const day = props.match.params.day
-        return <App {...props} day={day} days={this.state.days} updateDaysTasks={this.updateDaysTasks} />
-    }
-
-    mainPage = () => <div className={`${MainStyles.text} ${MainStyles.centerAlign}`} style={{ width: '100%' }}>Main page: Select the day</div>
+    mainPage = () =>
+        <Grid container justify="center">
+            <Typography variant="h3">Select the day</Typography>
+        </Grid>
 
     render() {
         const dayArr = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
         return (
             <Router>
-                <div className={'grid'}>
-                    <div className={`${MainStyles.centerAlign} grid-head`}>
+                <React.Fragment>
+                    <Grid container justify="center" alignItems="center" wrap="wrap">
                         <Route exact path="/" component={this.mainPage} />
-                        {dayArr.map(elem => <NavLink className={MainStyles.link} activeClassName={MainStyles.activeLink} key={elem.toLowerCase()} to={`/${elem.toLowerCase()}`}>{elem}</NavLink>)}
-                    </div>
-                    <Route path="/:day" component={this.renderHelper} />
-                    <DropDown
-                        renderHead={() => <div>View DayTasks</div>}
-                        renderBody={() => <div>
+                        <Grid item xs container justify="center" alignItems="center" spacing={8}>
                             {dayArr.map(elem =>
-                                <DropDownModalApp
-                                    head={elem}
-                                    day={elem.toLowerCase()}
-                                    days={this.state.days}
-                                    updateDaysTasks={this.updateDaysTasks}
+                                <Grid item key={elem.toLowerCase()}>
+                                    <Link
+                                        to={`/${elem.toLowerCase()}`}
+                                        component={MyLink}
+                                        variant="h4"
+                                        color="primary">
+                                        {elem}
+                                    </Link>
+                                </Grid>)}
+                        </Grid>
+                        <DropDown
+                            elemList={dayArr.map(elem =>
+                                <DropDownElem
+                                    name={elem}
+                                    key={elem.toLowerCase()}
+                                    renderModal={() => <ModalApp day={elem.toLowerCase()} />}
                                 />)}
-                        </div>}
-                    />
-                </div>
-            </Router>
+                        />
+                    </Grid>
+                    <Grid container justify="space-around" alignItems="center" wrap="wrap">
+                        <Route path="/:day" component={this.renderHelper} />
+                    </Grid>
+                </React.Fragment>
+            </Router >
         )
     }
 }
